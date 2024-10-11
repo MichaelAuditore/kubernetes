@@ -43,5 +43,5 @@ Here, you will find manifests defining Kubernetes Services. Services expose your
 To deploy any resource in Kubernetes, you can use `kubectl apply` command. For example:
 
 ```bash
-kubectl apply -f deployments/my-deployment.yaml
+kubectl apply -f deployments/webserver.yaml
 ```

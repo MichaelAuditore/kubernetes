@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pbitty-deployment
+  labels:
+    app: pbitty-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: pbitty-deployment
+  template:
+    metadata:
+      labels:
+        app: pbitty-deployment
+    spec:
+      containers:
+      - name: pbitty
+        image: pbitty/hello-from:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80

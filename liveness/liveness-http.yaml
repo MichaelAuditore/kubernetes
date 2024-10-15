@@ -12,10 +12,10 @@ spec:
     - liveness
     livenessProbe:
       httpGet:
-        path: /healthz
+        path: /started
         port: 8080
         httpHeaders:
         - name: Custom-Header
           value: Awesome
-      initialDelaySeconds: 3
+      initialDelaySeconds: 1
       periodSeconds: 3

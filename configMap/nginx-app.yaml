@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-app
+  labels:
+    app: nginx-app
+spec:
+  selector:
+    matchLabels:
+      app: nginx-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx-app
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        resources: {}
+        envFrom:
+        - configMapRef:
+            name: worker
+        ports:
+        - containerPort: 80
+          name: nginx-app
+        volumeMounts:
+        - name: shared-volume
+          mountPath: /usr/share/nginx/html
+      - name: debian
+        image: debian
+        envFrom:
+        - configMapRef:
+            name: worker
+        volumeMounts:
+        - name: worker-volume
+          mountPath: /host-vol
+        - name: shared-volume
+          mountPath: /debian-vol
+        resources: {}
+        command: ["/bin/sh", "-c"]
+        args:
+        - |
+          sed -e "s/\${title}/$title/" \
+          -e "s/\${greeting}/$greeting/" \
+          -e "s/\${name}/$name/" \
+          -e "s/\${company}/$company/" \
+          /host-vol/index-template.html > /debian-vol/index.html ; sleep infinity
+      volumes:
+      - name: shared-volume
+        hostPath:
+          path: "/home/shared/html"
+      - name: worker-volume
+        configMap:
+          name: index-template

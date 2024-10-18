@@ -23,6 +23,7 @@ spec:
       containers:
       - image: nginx
         name: nginx
+        resources: {}
         ports:
         - containerPort: 80
         volumeMounts:
@@ -30,6 +31,7 @@ spec:
           name: host-volume
       - image: debian
         name: debian
+        resources: {}
         volumeMounts:
         - mountPath: /host-vol
           name: host-volume

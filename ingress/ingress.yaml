@@ -7,7 +7,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: blue.example.com
+  - host: blue.io
     http:
       paths:
       - backend:
@@ -17,7 +17,7 @@ spec:
               number: 80
         path: /
         pathType: ImplementationSpecific
-  - host: green.example.com
+  - host: green.io
     http:
       paths:
       - backend:

@@ -1,0 +1,6 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: my-storage-class
+provisioner: kubernetes.io/no-provisioner # Use this for static provisioning; otherwise, use a cloud provisioner
+volumeBindingMode: WaitForFirstConsumer # Ensures the volume is only bound when a pod is scheduled

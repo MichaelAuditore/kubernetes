@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: demo-netpol
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      role: db
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          project: myproject # label to match specific namespace if present but empty select all ns
+    - podSelector:
+        matchLabels:
+          role: frontend # label to match specific pod, if present but empty select all pods
+    ports: # this rule allows traffic only if the traffic matches at least one port in the list.
+    - protocol: TCP
+      port: 6379
+  egress:
+  - to: # List of destinations for outgoing traffic of pods selected for this rule.
+    - ipBlock:
+        cidr: 10.0.0.0/24 # IP Block Valid
+    ports: # this rule allows traffic only if the traffic matches at least one port in the list.
+    - protocol: TCP
+      port: 5978
